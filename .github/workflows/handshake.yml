@@ -1,0 +1,19 @@
+name: Omen Vault Handshake
+on: [push]
+jobs:
+  handshake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Key
+        run: |
+          echo "Handshake Verified: $(date)" > LOGS.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.VAULT_HANDSHAKE_KEY }}
+      - name: Agentic Update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Omen Agent"
+          git add LOGS.md
+          git commit -m "Agentic Handshake Complete"
+          git push
